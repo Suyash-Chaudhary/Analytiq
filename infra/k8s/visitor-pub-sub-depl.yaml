@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: visitor-pub-sub-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: visitor-pub-sub
+  template:
+    metadata:
+      labels:
+        app: visitor-pub-sub
+    spec:
+      containers:
+        - image: redis:latest
+          name: visitor-pub-sub-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visitor-pub-sub-cluster-ip-srv
+spec:
+  selector:
+    app: visitor-pub-sub
+  ports:
+    - name: visitor-pub-sub-service
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
