@@ -7,7 +7,8 @@ server.on("connection", (socket, req) => {
   console.log("Server connection established");
 
   socket.on("message", (data, isBinary) => {
-    RedisPubSubPublisher.publish("domain", data.toString());
+    const payload = JSON.parse(data.toString());
+    RedisPubSubPublisher.publish(payload.subject, data.toString());
   });
 
   socket.on("error", (err) => {

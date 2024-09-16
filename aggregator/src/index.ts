@@ -7,9 +7,12 @@ const startUp = async () => {
   await RedisClient.connect();
 
   RedisPubSubSubscriber.initialize(RedisClient.client());
-  RedisPubSubSubscriber.subscribe("domain", (data) => {
-    console.log({ data });
-  });
+  RedisPubSubSubscriber.subscribe(
+    ["connection", "reconnection", "navigation", "visibilitychange"],
+    (data) => {
+      console.log({ data });
+    }
+  );
 
   app.listen(3000, () => {
     console.log("Listening on port 3000");

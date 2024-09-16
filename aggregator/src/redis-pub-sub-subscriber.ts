@@ -11,7 +11,7 @@ class RedisPubSubSubscriber {
     if (!this._instance) this._instance = new RedisPubSubSubscriber(client);
   }
 
-  static subscribe(channel: string, cb: (data: any) => void) {
+  static subscribe(channel: string | string[], cb: (data: any) => void) {
     this._instance?._client.subscribe(channel, (message) => {
       try {
         const data = JSON.parse(message);

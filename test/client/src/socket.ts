@@ -1,3 +1,10 @@
+import ClickEvents from "./events/buffers/click";
+import MouseMoveEvents from "./events/buffers/mouse-move";
+import NavigationEvents from "./events/buffers/navigation";
+import ResizeEvents from "./events/buffers/resize";
+import ScrollEvents from "./events/buffers/scroll";
+import { Subjects } from "./events/types/subjects";
+import VisibilityChangeEvents from "./events/buffers/visibility-change";
 import GlobalConfig from "./global-config";
 import GlobalState from "./global-state";
 import getIp from "./utils/get-ip";
@@ -10,7 +17,15 @@ class Socket {
 
   private static async _handleEventBufferTimeout() {
     GlobalState.instance().eventBufferTimeout = window.setTimeout(async () => {
-      await GlobalState.instance().sendEvents(this._socket);
+      const promises = [
+        ClickEvents.instance().pushEvents(this._socket!),
+        MouseMoveEvents.instance().pushEvents(this._socket!),
+        NavigationEvents.instance().pushEvents(this._socket!),
+        ResizeEvents.instance().pushEvents(this._socket!),
+        ScrollEvents.instance().pushEvents(this._socket!),
+        VisibilityChangeEvents.instance().pushEvents(this._socket!),
+      ];
+      await Promise.all(promises);
       this._handleEventBufferTimeout();
     }, GlobalConfig.EVENT_BUFFER_TIMEOUT);
   }
@@ -24,17 +39,19 @@ class Socket {
     globals.id = globals.id || short.generate();
 
     const payload = {
-      type: globals.firstLoad ? "connection" : "reconnetion",
-      ip: globals.ip,
-      id: globals.id,
-      html: document.documentElement.outerHTML,
-      domain: globals.domain,
-      subdomain: globals.subdomain,
-      page: globals.page,
-      timeStamp: performance.now(),
+      subject: globals.firstLoad ? Subjects.Connection : Subjects.Reconnection,
+      data: {
+        ip: globals.ip,
+        id: globals.id,
+        html: document.documentElement.outerHTML,
+        domain: globals.domain,
+        subdomain: globals.subdomain,
+        page: globals.page,
+        timeStamp: performance.now(),
+      },
     };
 
-    this._socket.send(JSON.stringify(payload));
+    this._socket!.send(JSON.stringify(payload));
 
     globals.firstLoad = false;
 
@@ -48,7 +65,7 @@ class Socket {
   }
 
   private static _handleError() {
-    this._socket.close();
+    this._socket!.close();
   }
 
   static async connect() {

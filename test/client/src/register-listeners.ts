@@ -1,3 +1,9 @@
+import ClickEvents from "./events/buffers/click";
+import MouseMoveEvents from "./events/buffers/mouse-move";
+import NavigationEvents from "./events/buffers/navigation";
+import ResizeEvents from "./events/buffers/resize";
+import ScrollEvents from "./events/buffers/scroll";
+import VisibilityChangeEvents from "./events/buffers/visibility-change";
 import GlobalState from "./global-state";
 
 function poolPathChange() {
@@ -6,10 +12,9 @@ function poolPathChange() {
     const newPage = window.location.hostname + window.location.pathname;
     if (globals.page != newPage) {
       globals.page = newPage;
-      globals.addEvent({
-        id: globals.id,
-        ip: globals.ip,
-        type: "navigation",
+      NavigationEvents.instance().addEvent({
+        id: globals.id!,
+        ip: globals.ip!,
         page: globals.page,
         html: document.documentElement.outerHTML,
         timeStamp: performance.now(),
@@ -23,10 +28,9 @@ const registerListeners = () => {
   const globals = GlobalState.instance();
 
   window.addEventListener("mousemove", (event) => {
-    globals.addEvent({
-      id: globals.id,
-      ip: globals.ip,
-      type: "mousemove",
+    MouseMoveEvents.instance().addEvent({
+      id: globals.id!,
+      ip: globals.ip!,
       x: event.x,
       y: event.y,
       timeStamp: event.timeStamp,
@@ -35,10 +39,9 @@ const registerListeners = () => {
 
   window.addEventListener("resize", (event) => {
     const w = event.target as Window;
-    globals.addEvent({
-      id: globals.id,
-      ip: globals.ip,
-      type: "resize",
+    ResizeEvents.instance().addEvent({
+      id: globals.id!,
+      ip: globals.ip!,
       width: w.innerWidth,
       height: w.innerHeight,
       timeStamp: event.timeStamp,
@@ -46,20 +49,18 @@ const registerListeners = () => {
   });
 
   window.addEventListener("visibilitychange", (event) => {
-    globals.addEvent({
-      id: globals.id,
-      ip: globals.ip,
-      type: "visibilitychange",
+    VisibilityChangeEvents.instance().addEvent({
+      id: globals.id!,
+      ip: globals.ip!,
       visibility: document.visibilityState,
       timeStamp: event.timeStamp,
     });
   });
 
   window.addEventListener("scroll", (event) => {
-    globals.addEvent({
-      id: globals.id,
-      ip: globals.ip,
-      type: "scroll",
+    ScrollEvents.instance().addEvent({
+      id: globals.id!,
+      ip: globals.ip!,
       x: window.scrollX,
       y: window.scrollY,
       timeStamp: event.timeStamp,
@@ -67,10 +68,9 @@ const registerListeners = () => {
   });
 
   window.addEventListener("click", (event) => {
-    globals.addEvent({
-      id: globals.id,
-      ip: globals.ip,
-      type: "click",
+    ClickEvents.instance().addEvent({
+      id: globals.id!,
+      ip: globals.ip!,
       x: event.x,
       y: event.y,
       timeStamp: event.timeStamp,
@@ -84,10 +84,9 @@ const registerListeners = () => {
     // New experimental Navigation API
     window.navigation.addEventListener("navigate", () => {
       globals.page = window.location.hostname + window.location.pathname;
-      globals.addEvent({
-        id: globals.id,
-        ip: globals.ip,
-        type: "navigation",
+      NavigationEvents.instance().addEvent({
+        id: globals.id!,
+        ip: globals.ip!,
         page: globals.page,
         html: document.documentElement.outerHTML,
         timeStamp: performance.now(),
