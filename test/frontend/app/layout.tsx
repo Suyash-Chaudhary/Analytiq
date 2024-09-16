@@ -26,6 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta name="analytiq-domain" content="100xdevs.com" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

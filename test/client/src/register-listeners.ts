@@ -1,4 +1,3 @@
-// @ts-nocheck
 import GlobalState from "./global-state";
 
 function poolPathChange() {
@@ -35,12 +34,13 @@ const registerListeners = () => {
   });
 
   window.addEventListener("resize", (event) => {
+    const w = event.target as Window;
     globals.addEvent({
       id: globals.id,
       ip: globals.ip,
       type: "resize",
-      width: event.currentTarget.innerWidth,
-      height: event.currentTarget.innerHeight,
+      width: w.innerWidth,
+      height: w.innerHeight,
       timeStamp: event.timeStamp,
     });
   });
@@ -78,11 +78,11 @@ const registerListeners = () => {
   });
 
   if (["firefox", "safari", "unknown"].includes(globals.browser)) {
-    // Simply pool to detect path changes.
+    // Simply pool to detect path changes
     poolPathChange();
   } else {
-    // New Navigation API has build in support.
-    navigation.addEventListener("navigate", () => {
+    // New experimental Navigation API
+    window.navigation.addEventListener("navigate", () => {
       globals.page = window.location.hostname + window.location.pathname;
       globals.addEvent({
         id: globals.id,

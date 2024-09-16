@@ -1,11 +1,13 @@
 import bufferedEvents from "./utils/buffered-events";
 import detectBrowser from "./utils/detect-browser";
+import getMetaData from "./utils/get-metadata";
 
 class GlobalState {
   // Single instance
   private static _instance: GlobalState | null = null;
   private constructor() {
     this.browser = detectBrowser();
+    [this.domain] = getMetaData();
     this.subdomain = window.location.hostname;
     this.page = window.location.hostname + window.location.pathname;
     this.firstLoad = true;
@@ -18,6 +20,7 @@ class GlobalState {
   }
 
   browser: string;
+  domain: string;
   subdomain: string;
   page: string;
   firstLoad: boolean;

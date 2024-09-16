@@ -28,6 +28,7 @@ class Socket {
       ip: globals.ip,
       id: globals.id,
       html: document.documentElement.outerHTML,
+      domain: globals.domain,
       subdomain: globals.subdomain,
       page: globals.page,
       timeStamp: performance.now(),
