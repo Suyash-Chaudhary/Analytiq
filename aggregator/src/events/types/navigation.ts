@@ -1,4 +1,20 @@
 import { Subjects } from "./subjects";
+import { z } from "zod";
+
+export const NavigationEventPayloadSchema = z.object({
+  subject: z.literal(Subjects.Navigation),
+  data: z.object({
+    records: z.array(
+      z.object({
+        id: z.string().uuid(),
+        ip: z.string().ip(),
+        page: z.string(),
+        html: z.string(),
+        timeStamp: z.number(),
+      })
+    ),
+  }),
+});
 
 interface NavigationEventRecord {
   id: string;

@@ -9,6 +9,8 @@ import GlobalConfig from "./global-config";
 import GlobalState from "./global-state";
 import getIp from "./utils/get-ip";
 import short from "short-uuid";
+import { ConnectionEvent } from "./events/types/connection";
+import { ReconnectionEvent } from "./events/types/reconnection";
 
 class Socket {
   private constructor() {}
@@ -36,9 +38,9 @@ class Socket {
     globals.reconnectAttempts = 0;
 
     globals.ip = globals.ip || (await getIp());
-    globals.id = globals.id || short.generate();
+    globals.id = globals.id || short.uuid();
 
-    const payload = {
+    const payload: ConnectionEvent["payload"] | ReconnectionEvent["payload"] = {
       subject: globals.firstLoad ? Subjects.Connection : Subjects.Reconnection,
       data: {
         ip: globals.ip,
