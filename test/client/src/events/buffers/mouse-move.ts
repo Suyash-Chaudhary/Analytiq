@@ -6,7 +6,7 @@ class MouseMoveEvents {
   private constructor() {
     [this.addEvent, this._pushEvents] = createEventBuffers<MouseMoveEvent>();
     this.pushEvents = async (socket: WebSocket) => {
-      this._pushEvents(socket, Subjects.MouseMove);
+      await this._pushEvents(socket, Subjects.MouseMove);
     };
   }
   private static _instance: MouseMoveEvents;

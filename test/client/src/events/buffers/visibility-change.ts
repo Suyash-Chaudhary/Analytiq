@@ -7,7 +7,7 @@ class VisibilityChangeEvents {
     [this.addEvent, this._pushEvents] =
       createEventBuffers<VisibilityChangeEvent>();
     this.pushEvents = async (socket: WebSocket) => {
-      this._pushEvents(socket, Subjects.VisibilityChange);
+      await this._pushEvents(socket, Subjects.VisibilityChange);
     };
   }
   private static _instance: VisibilityChangeEvents;

@@ -6,7 +6,7 @@ class ClickEvents {
   private constructor() {
     [this.addEvent, this._pushEvents] = createEventBuffers<ClickEvent>();
     this.pushEvents = async (socket: WebSocket) => {
-      this._pushEvents(socket, Subjects.MouseClick);
+      await this._pushEvents(socket, Subjects.MouseClick);
     };
   }
   private static _instance: ClickEvents;

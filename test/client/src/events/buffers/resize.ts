@@ -6,7 +6,7 @@ class ResizeEvents {
   private constructor() {
     [this.addEvent, this._pushEvents] = createEventBuffers<ResizeEvent>();
     this.pushEvents = async (socket: WebSocket) => {
-      this._pushEvents(socket, Subjects.Resize);
+      await this._pushEvents(socket, Subjects.Resize);
     };
   }
   private static _instance: ResizeEvents;

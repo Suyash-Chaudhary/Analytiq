@@ -6,7 +6,7 @@ class NavigationEvents {
   private constructor() {
     [this.addEvent, this._pushEvents] = createEventBuffers<NavigationEvent>();
     this.pushEvents = async (socket: WebSocket) => {
-      this._pushEvents(socket, Subjects.Navigation);
+      await this._pushEvents(socket, Subjects.Navigation);
     };
   }
   private static _instance: NavigationEvents;

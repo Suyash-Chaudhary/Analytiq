@@ -6,7 +6,7 @@ class ScrollEvents {
   private constructor() {
     [this.addEvent, this._pushEvents] = createEventBuffers<ScrollEvent>();
     this.pushEvents = async (socket: WebSocket) => {
-      this._pushEvents(socket, Subjects.Scroll);
+      await this._pushEvents(socket, Subjects.Scroll);
     };
   }
   private static _instance: ScrollEvents;
