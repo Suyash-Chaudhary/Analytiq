@@ -2,7 +2,7 @@ import createEventBuffers from "../../utils/event-buffers";
 import { CustomEvent } from "../types/custom";
 
 abstract class BufferedEvents<EventType extends CustomEvent> {
-  abstract subject: EventType["subject"];
+  abstract get subject(): EventType["subject"];
 
   protected constructor() {
     [this.addEvent, this._pushEvents] = createEventBuffers<EventType>();

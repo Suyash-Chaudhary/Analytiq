@@ -1,4 +1,5 @@
 import { RedisClientType } from "redis";
+import { CustomEvent } from "../types/custom";
 import { Subjects } from "../types/enums";
 
 class RedisPubSubSubscriber {
