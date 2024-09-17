@@ -1,6 +1,8 @@
 import { Subjects } from "./subjects";
 
 interface ScrollEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   x: number;

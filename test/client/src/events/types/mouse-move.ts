@@ -1,6 +1,8 @@
 import { Subjects } from "./subjects";
 
 interface MouseMoveEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   x: number;

@@ -1,4 +1,4 @@
-import { Subjects } from "./subjects";
+import { Subjects } from "./enums";
 import { z } from "zod";
 
 export const ReconnectionEventPayloadSchema = z.object({

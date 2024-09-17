@@ -1,6 +1,8 @@
 import { Subjects } from "./subjects";
 
 interface ClickEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   x: number;

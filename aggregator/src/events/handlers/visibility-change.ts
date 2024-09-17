@@ -1,3 +1,4 @@
+import DomainManager from "../../state/domain-manager";
 import {
   VisibilityChangeEvent,
   VisibilityChangeEventPayloadSchema,
@@ -11,5 +12,15 @@ export const handleVisibilityChangeEvent = async (data: any) => {
   }
 
   const payload: VisibilityChangeEvent["payload"] = status.data;
-  console.log("Handling VisibilityChangeEvent");
+  let visit;
+  payload.data.records.forEach((record) => {
+    visit = DomainManager.updateVisibility(
+      record.domain,
+      record.subdomain,
+      record.id,
+      record.timeStamp,
+      record.visibility
+    );
+  });
+  console.log({ visit });
 };

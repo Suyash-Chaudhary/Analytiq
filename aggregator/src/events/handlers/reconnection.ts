@@ -1,3 +1,4 @@
+import DomainManager from "../../state/domain-manager";
 import {
   ReconnectionEvent,
   ReconnectionEventPayloadSchema,
@@ -11,5 +12,12 @@ export const handleReconnectionEvent = async (data: any) => {
   }
 
   const payload: ReconnectionEvent["payload"] = status.data;
-  console.log("Handling ConnectionEvent");
+  const domain = DomainManager.updateUrl(
+    payload.data.domain,
+    payload.data.subdomain,
+    payload.data.id,
+    payload.data.timeStamp,
+    payload.data.page
+  );
+  console.log({ domain });
 };

@@ -1,4 +1,4 @@
-import { Subjects } from "./subjects";
+import { Subjects } from "./enums";
 import { z } from "zod";
 
 export const NavigationEventPayloadSchema = z.object({
@@ -8,6 +8,8 @@ export const NavigationEventPayloadSchema = z.object({
       z.object({
         id: z.string().uuid(),
         ip: z.string().ip(),
+        domain: z.string(),
+        subdomain: z.string(),
         page: z.string(),
         html: z.string(),
         timeStamp: z.number(),
@@ -17,6 +19,8 @@ export const NavigationEventPayloadSchema = z.object({
 });
 
 interface NavigationEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   page: string;

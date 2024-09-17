@@ -1,4 +1,4 @@
-import { Subjects } from "./subjects";
+import { Subjects } from "./enums";
 
 export interface CustomEvent {
   subject: Subjects;

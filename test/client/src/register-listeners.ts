@@ -13,8 +13,10 @@ function poolPathChange() {
     if (globals.page != newPage) {
       globals.page = newPage;
       NavigationEvents.instance().addEvent({
-        id: globals.id!,
-        ip: globals.ip!,
+        domain: globals.domain,
+        subdomain: globals.subdomain,
+        id: globals.id,
+        ip: globals.ip,
         page: globals.page,
         html: document.documentElement.outerHTML,
         timeStamp: performance.now(),
@@ -29,8 +31,10 @@ const registerListeners = () => {
 
   window.addEventListener("mousemove", (event) => {
     MouseMoveEvents.instance().addEvent({
-      id: globals.id!,
-      ip: globals.ip!,
+      domain: globals.domain,
+      subdomain: globals.subdomain,
+      id: globals.id,
+      ip: globals.ip,
       x: event.x,
       y: event.y,
       timeStamp: event.timeStamp,
@@ -40,8 +44,10 @@ const registerListeners = () => {
   window.addEventListener("resize", (event) => {
     const w = event.target as Window;
     ResizeEvents.instance().addEvent({
-      id: globals.id!,
-      ip: globals.ip!,
+      domain: globals.domain,
+      subdomain: globals.subdomain,
+      id: globals.id,
+      ip: globals.ip,
       width: w.innerWidth,
       height: w.innerHeight,
       timeStamp: event.timeStamp,
@@ -50,8 +56,10 @@ const registerListeners = () => {
 
   window.addEventListener("visibilitychange", (event) => {
     VisibilityChangeEvents.instance().addEvent({
-      id: globals.id!,
-      ip: globals.ip!,
+      domain: globals.domain,
+      subdomain: globals.subdomain,
+      id: globals.id,
+      ip: globals.ip,
       visibility: document.visibilityState,
       timeStamp: event.timeStamp,
     });
@@ -59,8 +67,10 @@ const registerListeners = () => {
 
   window.addEventListener("scroll", (event) => {
     ScrollEvents.instance().addEvent({
-      id: globals.id!,
-      ip: globals.ip!,
+      domain: globals.domain,
+      subdomain: globals.subdomain,
+      id: globals.id,
+      ip: globals.ip,
       x: window.scrollX,
       y: window.scrollY,
       timeStamp: event.timeStamp,
@@ -69,8 +79,10 @@ const registerListeners = () => {
 
   window.addEventListener("click", (event) => {
     ClickEvents.instance().addEvent({
-      id: globals.id!,
-      ip: globals.ip!,
+      domain: globals.domain,
+      subdomain: globals.subdomain,
+      id: globals.id,
+      ip: globals.ip,
       x: event.x,
       y: event.y,
       timeStamp: event.timeStamp,
@@ -82,11 +94,14 @@ const registerListeners = () => {
     poolPathChange();
   } else {
     // New experimental Navigation API
-    window.navigation.addEventListener("navigate", () => {
-      globals.page = window.location.hostname + window.location.pathname;
+    window.navigation.addEventListener("navigate", (event) => {
+      globals.page =
+        window.location.hostname + new URL(event.destination.url).pathname;
       NavigationEvents.instance().addEvent({
-        id: globals.id!,
-        ip: globals.ip!,
+        domain: globals.domain,
+        subdomain: globals.subdomain,
+        id: globals.id,
+        ip: globals.ip,
         page: globals.page,
         html: document.documentElement.outerHTML,
         timeStamp: performance.now(),

@@ -1,4 +1,4 @@
-import { Subjects } from "./subjects";
+import { Subjects, Visibility } from "./enums";
 import { z } from "zod";
 
 export const VisibilityChangeEventPayloadSchema = z.object({
@@ -8,7 +8,9 @@ export const VisibilityChangeEventPayloadSchema = z.object({
       z.object({
         id: z.string().uuid(),
         ip: z.string().ip(),
-        visibility: z.enum(["hidden", "visible"]),
+        domain: z.string(),
+        subdomain: z.string(),
+        visibility: z.nativeEnum(Visibility),
         timeStamp: z.number(),
       })
     ),
@@ -16,9 +18,11 @@ export const VisibilityChangeEventPayloadSchema = z.object({
 });
 
 interface VisibilityChangeEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
-  visibility: "hidden" | "visible";
+  visibility: Visibility;
   timeStamp: number;
 }
 

@@ -1,6 +1,8 @@
 import { Subjects } from "./subjects";
 
 interface VisibilityChangeEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   visibility: "hidden" | "visible";

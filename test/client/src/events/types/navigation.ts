@@ -1,6 +1,8 @@
 import { Subjects } from "./subjects";
 
 interface NavigationEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   page: string;

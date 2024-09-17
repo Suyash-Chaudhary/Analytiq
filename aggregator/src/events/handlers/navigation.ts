@@ -1,3 +1,4 @@
+import DomainManager from "../../state/domain-manager";
 import {
   NavigationEvent,
   NavigationEventPayloadSchema,
@@ -11,5 +12,16 @@ export const handleNavigationEvent = async (data: any) => {
   }
 
   const payload: NavigationEvent["payload"] = status.data;
-  console.log("Handling NavigationEvent");
+
+  let visit;
+  payload.data.records.forEach((record) => {
+    visit = DomainManager.updateUrl(
+      record.domain,
+      record.subdomain,
+      record.id,
+      record.timeStamp,
+      record.page
+    );
+  });
+  console.log({ visit });
 };

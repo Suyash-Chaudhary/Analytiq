@@ -8,3 +8,8 @@ export enum Subjects {
   Connection = "connection",
   Reconnection = "reconnection",
 }
+
+export enum Visibility {
+  Visible = "visible",
+  Hidden = "hidden",
+}

@@ -1,4 +1,4 @@
-import DomainManager from "../../domain-manager";
+import DomainManager from "../../state/domain-manager";
 import {
   ConnectionEvent,
   ConnectionEventPayloadSchema,
@@ -12,25 +12,13 @@ export const handleConnectionEvent = async (data: any) => {
   }
 
   const payload: ConnectionEvent["payload"] = status.data;
-  const domain = DomainManager.addVisit(
+  const visit = DomainManager.addVisit(
     payload.data.domain,
     payload.data.subdomain,
-    {
-      vid: payload.data.id,
-      domain: payload.data.domain,
-      subdomain: payload.data.subdomain,
-      ipv4: payload.data.ip,
-      startTime: payload.data.timeStamp,
-      page: payload.data.page,
-      query: "",
-      sessions: [
-        {
-          page: payload.data.page,
-          query: "",
-          startTime: payload.data.timeStamp,
-        },
-      ],
-    }
+    payload.data.ip,
+    payload.data.id,
+    payload.data.timeStamp,
+    payload.data.page
   );
-  console.log({ domain });
+  console.log({ visit });
 };

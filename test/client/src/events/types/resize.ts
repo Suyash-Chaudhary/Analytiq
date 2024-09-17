@@ -1,6 +1,8 @@
 import { Subjects } from "./subjects";
 
 interface ResizeEventRecord {
+  domain: string;
+  subdomain: string;
   id: string;
   ip: string;
   width: number;
