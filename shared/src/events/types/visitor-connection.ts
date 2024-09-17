@@ -18,5 +18,5 @@ interface VisitorConnectionPayload {
 export interface VisitorConnectionEvent {
   subject: Subjects.VisitorConnection;
   record: VisitorConnectionRecord;
-  payload: VisitorConnectionPayload;
+  data: VisitorConnectionPayload;
 }

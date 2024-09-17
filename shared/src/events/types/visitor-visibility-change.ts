@@ -17,5 +17,5 @@ interface VisitorVisibilityChangeEventPayload {
 export interface VisitorVisibilityChangeEvent {
   subject: Subjects.VisitorVisibilityChange;
   record: VisitorVisibilityChangeEventRecord;
-  payload: VisitorVisibilityChangeEventPayload;
+  data: VisitorVisibilityChangeEventPayload;
 }

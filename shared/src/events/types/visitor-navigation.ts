@@ -18,5 +18,5 @@ interface VisitorNavigationEventPayload {
 export interface VisitorNavigationEvent {
   subject: Subjects.VisitorNavigation;
   record: VisitorNavigationEventRecord;
-  payload: VisitorNavigationEventPayload;
+  data: VisitorNavigationEventPayload;
 }

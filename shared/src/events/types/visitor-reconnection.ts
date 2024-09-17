@@ -18,5 +18,5 @@ interface VisitorReconnectionEventPayload {
 export interface VisitorReconnectionEvent {
   subject: Subjects.VisitorReconnection;
   record: VisitorReconnectionEventRecord;
-  payload: VisitorReconnectionEventPayload;
+  data: VisitorReconnectionEventPayload;
 }

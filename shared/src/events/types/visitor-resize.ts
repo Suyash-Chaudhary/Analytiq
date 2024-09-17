@@ -18,5 +18,5 @@ interface VisitorResizeEventPayload {
 export interface VisitorResizeEvent {
   subject: Subjects.VisitorResize;
   record: VisitorResizeEventRecord;
-  payload: VisitorResizeEventPayload;
+  data: VisitorResizeEventPayload;
 }

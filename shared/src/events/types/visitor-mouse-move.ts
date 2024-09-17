@@ -18,5 +18,5 @@ interface VisitorMouseMoveEventPayload {
 export interface VisitorMouseMoveEvent {
   subject: Subjects.VisitorMouseMove;
   record: VisitorMouseMoveEventRecord;
-  payload: VisitorMouseMoveEventPayload;
+  data: VisitorMouseMoveEventPayload;
 }

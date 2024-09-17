@@ -18,5 +18,5 @@ interface VisitorScrollEventPayload {
 export interface VisitorScrollEvent {
   subject: Subjects.VisitorScroll;
   record: VisitorScrollEventRecord;
-  payload: VisitorScrollEventPayload;
+  data: VisitorScrollEventPayload;
 }
