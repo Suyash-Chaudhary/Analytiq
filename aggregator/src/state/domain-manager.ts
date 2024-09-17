@@ -1,4 +1,4 @@
-import { Visibility } from "../events/types/enums";
+import { Visibility } from "@analytiq/shared";
 
 export interface ILocation {
   country: string;

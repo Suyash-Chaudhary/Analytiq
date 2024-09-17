@@ -1,11 +1,12 @@
 import { Subjects } from "../subjects";
+import { Visibility } from "../visibility";
 
 interface VisitorVisibilityChangeEventRecord {
   domain: string;
   subdomain: string;
   id: string;
   ip: string;
-  visibility: "hidden" | "visible";
+  visibility: Visibility;
   timeStamp: number;
 }
 

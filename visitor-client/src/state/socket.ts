@@ -3,12 +3,12 @@ import {
   VisitorConnectionEvent,
   VisitorReconnectionEvent,
 } from "@analytiq/shared";
-import ClickEvents from "../events/buffers/click";
-import MouseMoveEvents from "../events/buffers/mouse-move";
-import NavigationEvents from "../events/buffers/navigation";
-import ResizeEvents from "../events/buffers/resize";
-import ScrollEvents from "../events/buffers/scroll";
-import VisibilityChangeEvents from "../events/buffers/visibility-change";
+import ClickEvents from "../events/buffers/visitor-click";
+import MouseMoveEvents from "../events/buffers/visitor-mouse-move";
+import NavigationEvents from "../events/buffers/visitor-navigation";
+import ResizeEvents from "../events/buffers/visitor-resize";
+import ScrollEvents from "../events/buffers/visitor-scroll";
+import VisibilityChangeEvents from "../events/buffers/visitor-visibility-change";
 import GlobalConfig from "./global-config";
 import GlobalState from "./global-state";
 

@@ -1,20 +1,20 @@
 import { EventBuffer, Subjects, VisitorScrollEvent } from "@analytiq/shared";
 import GlobalConfig from "../../state/global-config";
 
-class ScrollEvents extends EventBuffer<VisitorScrollEvent> {
+class VisitorScrollEvents extends EventBuffer<VisitorScrollEvent> {
   MAX_BUFFER_SIZE: number = GlobalConfig.MAX_BUFFER_SIZE;
   subject: Subjects.VisitorScroll = Subjects.VisitorScroll;
   private constructor() {
     super();
   }
 
-  private static _instance: ScrollEvents;
+  private static _instance: VisitorScrollEvents;
   static instance() {
-    if (!this._instance) this._instance = new ScrollEvents();
+    if (!this._instance) this._instance = new VisitorScrollEvents();
     return this._instance;
   }
 }
 
-ScrollEvents.instance();
+VisitorScrollEvents.instance();
 
-export default ScrollEvents;
+export default VisitorScrollEvents;
