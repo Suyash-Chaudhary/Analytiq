@@ -21,4 +21,4 @@ abstract class EventBuffer<EventType extends CustomEvent> {
   }
 }
 
-export default EventBuffer;
+export { EventBuffer };
