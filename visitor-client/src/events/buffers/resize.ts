@@ -1,9 +1,9 @@
-import { ResizeEvent } from "../types/resize";
-import { Subjects } from "../types/subjects";
-import BufferedEvents from "./buffered-events";
+import { EventBuffer, Subjects, VisitorResizeEvent } from "@analytiq/shared";
+import GlobalConfig from "../../state/global-config";
 
-class ResizeEvents extends BufferedEvents<ResizeEvent> {
-  subject: Subjects.Resize = Subjects.Resize;
+class ResizeEvents extends EventBuffer<VisitorResizeEvent> {
+  MAX_BUFFER_SIZE: number = GlobalConfig.MAX_BUFFER_SIZE;
+  subject: Subjects.VisitorResize = Subjects.VisitorResize;
   private constructor() {
     super();
   }

@@ -1,14 +1,16 @@
+import {
+  Subjects,
+  VisitorConnectionEvent,
+  VisitorReconnectionEvent,
+} from "@analytiq/shared";
 import ClickEvents from "../events/buffers/click";
 import MouseMoveEvents from "../events/buffers/mouse-move";
 import NavigationEvents from "../events/buffers/navigation";
 import ResizeEvents from "../events/buffers/resize";
 import ScrollEvents from "../events/buffers/scroll";
-import { Subjects } from "../events/types/subjects";
 import VisibilityChangeEvents from "../events/buffers/visibility-change";
 import GlobalConfig from "./global-config";
 import GlobalState from "./global-state";
-import { ConnectionEvent } from "../events/types/connection";
-import { ReconnectionEvent } from "../events/types/reconnection";
 
 class Socket {
   private _socket: WebSocket | null = null;
@@ -29,22 +31,22 @@ class Socket {
   private static async _handleEventBufferTimeout() {
     GlobalState.instance().eventBufferTimeout = window.setTimeout(async () => {
       const promises = [
-        ClickEvents.instance().pushEvents(
+        ClickEvents.instance().sendEvents(
           this.socket("_handleEventBufferTimeout")
         ),
-        MouseMoveEvents.instance().pushEvents(
+        MouseMoveEvents.instance().sendEvents(
           this.socket("_handleEventBufferTimeout")
         ),
-        NavigationEvents.instance().pushEvents(
+        NavigationEvents.instance().sendEvents(
           this.socket("_handleEventBufferTimeout")
         ),
-        ResizeEvents.instance().pushEvents(
+        ResizeEvents.instance().sendEvents(
           this.socket("_handleEventBufferTimeout")
         ),
-        ScrollEvents.instance().pushEvents(
+        ScrollEvents.instance().sendEvents(
           this.socket("_handleEventBufferTimeout")
         ),
-        VisibilityChangeEvents.instance().pushEvents(
+        VisibilityChangeEvents.instance().sendEvents(
           this.socket("_handleEventBufferTimeout")
         ),
       ];
@@ -58,8 +60,12 @@ class Socket {
 
     globals.reconnectAttempts = 0;
 
-    const payload: ConnectionEvent["payload"] | ReconnectionEvent["payload"] = {
-      subject: globals.firstLoad ? Subjects.Connection : Subjects.Reconnection,
+    const payload:
+      | VisitorConnectionEvent["data"]
+      | VisitorReconnectionEvent["data"] = {
+      subject: globals.firstLoad
+        ? Subjects.VisitorConnection
+        : Subjects.VisitorReconnection,
       data: {
         ip: globals.ip,
         id: globals.id,

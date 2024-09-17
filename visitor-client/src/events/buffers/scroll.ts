@@ -1,9 +1,9 @@
-import { ScrollEvent } from "../types/scroll";
-import { Subjects } from "../types/subjects";
-import BufferedEvents from "./buffered-events";
+import { EventBuffer, Subjects, VisitorScrollEvent } from "@analytiq/shared";
+import GlobalConfig from "../../state/global-config";
 
-class ScrollEvents extends BufferedEvents<ScrollEvent> {
-  subject: Subjects.Scroll = Subjects.Scroll;
+class ScrollEvents extends EventBuffer<VisitorScrollEvent> {
+  MAX_BUFFER_SIZE: number = GlobalConfig.MAX_BUFFER_SIZE;
+  subject: Subjects.VisitorScroll = Subjects.VisitorScroll;
   private constructor() {
     super();
   }

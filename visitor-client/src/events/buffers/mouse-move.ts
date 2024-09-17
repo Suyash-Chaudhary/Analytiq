@@ -1,9 +1,9 @@
-import { MouseMoveEvent } from "../types/mouse-move";
-import { Subjects } from "../types/subjects";
-import BufferedEvents from "./buffered-events";
+import { EventBuffer, Subjects, VisitorMouseMoveEvent } from "@analytiq/shared";
+import GlobalConfig from "../../state/global-config";
 
-class MouseMoveEvents extends BufferedEvents<MouseMoveEvent> {
-  subject: Subjects.MouseMove = Subjects.MouseMove;
+class MouseMoveEvents extends EventBuffer<VisitorMouseMoveEvent> {
+  MAX_BUFFER_SIZE = GlobalConfig.MAX_BUFFER_SIZE;
+  subject: Subjects.VisitorMouseMove = Subjects.VisitorMouseMove;
   private constructor() {
     super();
   }

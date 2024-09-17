@@ -1,9 +1,13 @@
-import { ClickEvent } from "../types/click";
-import { Subjects } from "../types/subjects";
-import BufferedEvents from "./buffered-events";
+import {
+  EventBuffer,
+  Subjects,
+  VisitorMouseClickEvent,
+} from "@analytiq/shared";
+import GlobalConfig from "../../state/global-config";
 
-class ClickEvents extends BufferedEvents<ClickEvent> {
-  subject: Subjects.MouseClick = Subjects.MouseClick;
+class ClickEvents extends EventBuffer<VisitorMouseClickEvent> {
+  MAX_BUFFER_SIZE = GlobalConfig.MAX_BUFFER_SIZE;
+  subject: Subjects.VisitorMouseClick = Subjects.VisitorMouseClick;
   private constructor() {
     super();
   }
