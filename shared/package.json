@@ -7,13 +7,14 @@
     "dist/**/*"
   ],
   "scripts": {
-    "clean": "del ./build/*",
+    "clean": "del ./dist/*",
     "build": "npm run clean && tsc"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "del-cli": "^5.1.0",
     "typescript": "^5.6.2"
   },
   "dependencies": {
