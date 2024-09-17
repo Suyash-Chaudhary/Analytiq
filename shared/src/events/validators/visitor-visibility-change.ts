@@ -3,7 +3,7 @@ import { z } from "zod";
 import { Visibility } from "../visibility";
 
 const VisitorVisibilityChangeEventPayloadSchema = z.object({
-  subject: z.literal(Subjects.VisitorMouseMove),
+  subject: z.literal(Subjects.VisitorVisibilityChange),
   data: z.object({
     records: z.array(
       z.object({

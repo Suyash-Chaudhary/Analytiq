@@ -23,5 +23,5 @@ export * from "./events/validators/visitor-visibility-change";
 export * from "./events/utils/event-buffer";
 
 export * from "./clients/redis/redis-client";
-export * from "./clients/redis/pub-sub/redis-pub-sub-publisher";
 export * from "./clients/redis/pub-sub/redis-pub-sub-subscriber";
+export * from "./clients/redis/pub-sub/redis-pub-sub-publisher";

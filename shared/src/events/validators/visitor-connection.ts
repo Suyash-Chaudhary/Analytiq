@@ -1,7 +1,7 @@
 import { Subjects } from "../subjects";
 import { z } from "zod";
 
-const VisitorConnectionPayloadSchema = z.object({
+const VisitorConnectionEventPayloadSchema = z.object({
   subject: z.literal(Subjects.VisitorConnection),
   data: z.object({
     domain: z.string(),
@@ -14,4 +14,4 @@ const VisitorConnectionPayloadSchema = z.object({
   }),
 });
 
-export { VisitorConnectionPayloadSchema };
+export { VisitorConnectionEventPayloadSchema };
