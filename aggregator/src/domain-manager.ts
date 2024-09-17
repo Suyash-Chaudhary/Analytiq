@@ -20,9 +20,9 @@ interface IVisit {
   subdomain: string;
   ipv4: string;
   location?: ILocation;
-  startTime: Date;
+  startTime: number;
   page: string;
-  query: { [key: string]: string };
+  query: string;
   sessions: ISession[];
 }
 
@@ -54,7 +54,7 @@ class DomainManager {
       throw new Error(
         `DomainManager must be initialized before calling addVisit. Try calling the initialize() method during server setup`
       );
-    this._instance._addVisit(domain, subdomain, visit);
+    return this._instance._addVisit(domain, subdomain, visit);
   }
 
   static removeVisit(domain: string, subdomain: string, vid: string) {
@@ -78,31 +78,31 @@ class DomainManager {
     this._instance._udpdateUrl(domain, subdomain, vid, url);
   }
 
-  static startSession(
-    domain: string,
-    subdomain: string,
-    vid: string,
-    timestamp: Date
-  ) {
-    if (!this._instance)
-      throw new Error(
-        `DomainManager must be initialized before calling startSession. Try calling the initialize() method during server setup`
-      );
-    this._instance._startSession(domain, subdomain, vid, timestamp);
-  }
+  // static startSession(
+  //   domain: string,
+  //   subdomain: string,
+  //   vid: string,
+  //   timestamp: Date
+  // ) {
+  //   if (!this._instance)
+  //     throw new Error(
+  //       `DomainManager must be initialized before calling startSession. Try calling the initialize() method during server setup`
+  //     );
+  //   this._instance._startSession(domain, subdomain, vid, timestamp);
+  // }
 
-  static closeSession(
-    domain: string,
-    subdomain: string,
-    vid: string,
-    timestamp: Date
-  ) {
-    if (!this._instance)
-      throw new Error(
-        `DomainManager must be initialized before calling closeSession. Try calling the initialize() method during server setup`
-      );
-    this._instance._closeSession(domain, subdomain, vid, timestamp);
-  }
+  // static closeSession(
+  //   domain: string,
+  //   subdomain: string,
+  //   vid: string,
+  //   timestamp: Date
+  // ) {
+  //   if (!this._instance)
+  //     throw new Error(
+  //       `DomainManager must be initialized before calling closeSession. Try calling the initialize() method during server setup`
+  //     );
+  //   this._instance._closeSession(domain, subdomain, vid, timestamp);
+  // }
   // End of Singleton Class methods
 
   // Instance implementation
@@ -113,6 +113,7 @@ class DomainManager {
     if (!this._domains[domain][subdomain])
       this._domains[domain][subdomain] = {};
     this._domains[domain][subdomain][visit.vid] = visit;
+    return this._domains[domain];
   }
 
   private _removeVisit(domain: string, subdomain: string, vid: string) {
@@ -130,25 +131,26 @@ class DomainManager {
       this._domains[domain][subdomain][vid].page = url;
   }
 
-  private _startSession(
-    domain: string,
-    subdomain: string,
-    vid: string,
-    timestamp: Date
-  ) {
-    if (this._domains[domain]?.[subdomain]?.[vid])
-      this._domains[domain]?.[subdomain]?.[vid].sessions.push(timestamp);
-  }
+  // private _startSession(
+  //   domain: string,
+  //   subdomain: string,
+  //   vid: string,
+  //   timestamp: Date
+  // ) {
+  //   if (this._domains[domain]?.[subdomain]?.[vid])
+  //     this._domains[domain]?.[subdomain]?.[vid].sessions.push(timestamp);
+  // }
 
-  private _closeSession(
-    domain: string,
-    subdomain: string,
-    vid: string,
-    timestamp: Date
-  ) {
-    if (this._domains[domain]?.[subdomain]?.[vid])
-      this._domains[domain]?.[subdomain]?.[vid].sessions.push(timestamp);
-  }
+  // private _closeSession(
+  //   domain: string,
+  //   subdomain: string,
+  //   vid: string,
+  //   timestamp: Date
+  // ) {
+  //   if (this._domains[domain]?.[subdomain]?.[vid])
+  //     this._domains[domain]?.[subdomain]?.[vid].sessions.push(timestamp);
+  // }
 }
+DomainManager.initialize();
 
 export default DomainManager;

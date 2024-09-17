@@ -1,5 +1,11 @@
 import registerListeners from "./register-listeners";
+import GlobalState from "./state/global-state";
 import Socket from "./socket";
 
-registerListeners();
-Socket.connect();
+const startup = async () => {
+  await GlobalState.initialize();
+  registerListeners();
+  Socket.connect();
+};
+
+startup();

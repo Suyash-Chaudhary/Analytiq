@@ -1,10 +1,14 @@
-import detectBrowser from "./utils/detect-browser";
-import getMetaData from "./utils/get-metadata";
+import detectBrowser from "../utils/detect-browser";
+import getIp from "../utils/get-ip";
+import getMetaData from "../utils/get-metadata";
+import short from "short-uuid";
 
 class GlobalState {
   // Single instance
   private static _instance: GlobalState | null = null;
-  private constructor() {
+  private constructor(id: string, ip: string) {
+    this.id = id;
+    this.ip = ip;
     this.browser = detectBrowser();
     [this.domain] = getMetaData();
     this.subdomain = window.location.hostname;
@@ -12,8 +16,17 @@ class GlobalState {
     this.firstLoad = true;
     this.reconnectAttempts = 0;
   }
+  static async initialize() {
+    const id = short.uuid();
+    const ip = await getIp();
+    this._instance = new GlobalState(id, ip);
+  }
+
   static instance() {
-    if (!this._instance) this._instance = new GlobalState();
+    if (!this._instance)
+      throw new Error(
+        "GlobalState must be initialized before accessing it's instance"
+      );
     return this._instance;
   }
 
@@ -24,10 +37,8 @@ class GlobalState {
   firstLoad: boolean;
   reconnectAttempts: number;
   eventBufferTimeout?: number;
-  ip?: string;
-  id?: string;
+  ip: string;
+  id: string;
 }
-
-GlobalState.instance();
 
 export default GlobalState;

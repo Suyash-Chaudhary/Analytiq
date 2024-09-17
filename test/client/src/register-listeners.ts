@@ -4,7 +4,7 @@ import NavigationEvents from "./events/buffers/navigation";
 import ResizeEvents from "./events/buffers/resize";
 import ScrollEvents from "./events/buffers/scroll";
 import VisibilityChangeEvents from "./events/buffers/visibility-change";
-import GlobalState from "./global-state";
+import GlobalState from "./state/global-state";
 
 function poolPathChange() {
   const globals = GlobalState.instance();

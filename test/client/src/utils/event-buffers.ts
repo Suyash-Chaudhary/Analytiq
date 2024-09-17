@@ -1,5 +1,5 @@
 import { Subjects } from "../events/types/subjects";
-import GlobalConfig from "../global-config";
+import GlobalConfig from "../state/global-config";
 import { CustomEvent } from "../events/types/custom";
 
 const createEventBuffers = <EventType extends CustomEvent>(): [
