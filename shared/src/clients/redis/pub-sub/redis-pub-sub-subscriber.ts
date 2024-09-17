@@ -5,7 +5,6 @@ export abstract class RedisPSSubscriber<EventType extends CustomEvent> {
   abstract get subject(): EventType["subject"];
   abstract validator(payload: any): EventType["data"];
   abstract handler(payload: EventType["data"]): Promise<void>;
-  protected constructor() {}
 
   subscribe(client: RedisClientType) {
     client.subscribe(this.subject, async (message) => {
