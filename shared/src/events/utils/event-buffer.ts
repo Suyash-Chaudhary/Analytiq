@@ -1,7 +1,9 @@
 import { CustomEvent } from "../custom-event";
 
 abstract class EventBuffer<EventType extends CustomEvent> {
-  abstract get MAX_BUFFER_SIZE(): number;
+  abstract MAX_BUFFER_SIZE: number;
+  abstract subject: EventType["subject"];
+
   protected constructor() {}
 
   private q1: EventType["record"][] = [];
@@ -12,10 +14,12 @@ abstract class EventBuffer<EventType extends CustomEvent> {
     this.q1.push(record);
   }
 
-  sendEvents(socket: WebSocket, subject: EventType["subject"]) {
+  sendEvents(socket: WebSocket) {
     if (socket && socket.readyState && this.q1.length > 0) {
       [this.q1, this.q2] = [this.q2, this.q1];
-      socket.send(JSON.stringify({ subject, data: { records: this.q2 } }));
+      socket.send(
+        JSON.stringify({ subject: this.subject, data: { records: this.q2 } })
+      );
       this.q2 = [];
     }
   }
