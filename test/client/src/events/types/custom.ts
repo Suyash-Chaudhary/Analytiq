@@ -1,7 +1,7 @@
 import { Subjects } from "./subjects";
 
 export interface CustomEvent {
-  subject: Subjects;
+  subject: string;
   record: any;
   payload: any;
 }

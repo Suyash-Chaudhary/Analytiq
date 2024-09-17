@@ -1,23 +1,18 @@
-import createEventBuffers from "../../utils/event-buffers";
 import { MouseMoveEvent } from "../types/mouse-move";
 import { Subjects } from "../types/subjects";
+import BufferedEvents from "./buffered-events";
 
-class MouseMoveEvents {
+class MouseMoveEvents extends BufferedEvents<MouseMoveEvent> {
+  subject: Subjects.MouseMove = Subjects.MouseMove;
   private constructor() {
-    [this.addEvent, this._pushEvents] = createEventBuffers<MouseMoveEvent>();
-    this.pushEvents = async (socket: WebSocket) => {
-      await this._pushEvents(socket, Subjects.MouseMove);
-    };
+    super();
   }
+
   private static _instance: MouseMoveEvents;
   static instance() {
     if (!this._instance) this._instance = new MouseMoveEvents();
     return this._instance;
   }
-
-  private _pushEvents: (socket: WebSocket, subject: Subjects) => Promise<void>;
-  pushEvents: (socket: WebSocket) => Promise<void>;
-  addEvent: (event: MouseMoveEvent["record"]) => void;
 }
 
 MouseMoveEvents.instance();

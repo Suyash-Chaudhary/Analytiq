@@ -1,23 +1,18 @@
-import createEventBuffers from "../../utils/event-buffers";
 import { ResizeEvent } from "../types/resize";
 import { Subjects } from "../types/subjects";
+import BufferedEvents from "./buffered-events";
 
-class ResizeEvents {
+class ResizeEvents extends BufferedEvents<ResizeEvent> {
+  subject: Subjects.Resize = Subjects.Resize;
   private constructor() {
-    [this.addEvent, this._pushEvents] = createEventBuffers<ResizeEvent>();
-    this.pushEvents = async (socket: WebSocket) => {
-      await this._pushEvents(socket, Subjects.Resize);
-    };
+    super();
   }
+
   private static _instance: ResizeEvents;
   static instance() {
     if (!this._instance) this._instance = new ResizeEvents();
     return this._instance;
   }
-
-  private _pushEvents: (socket: WebSocket, subject: Subjects) => Promise<void>;
-  pushEvents: (socket: WebSocket) => Promise<void>;
-  addEvent: (event: ResizeEvent["record"]) => void;
 }
 
 ResizeEvents.instance();

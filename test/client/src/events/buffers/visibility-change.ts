@@ -1,24 +1,18 @@
-import createEventBuffers from "../../utils/event-buffers";
 import { Subjects } from "../types/subjects";
 import { VisibilityChangeEvent } from "../types/visibility-change";
+import BufferedEvents from "./buffered-events";
 
-class VisibilityChangeEvents {
+class VisibilityChangeEvents extends BufferedEvents<VisibilityChangeEvent> {
+  subject: Subjects.VisibilityChange = Subjects.VisibilityChange;
   private constructor() {
-    [this.addEvent, this._pushEvents] =
-      createEventBuffers<VisibilityChangeEvent>();
-    this.pushEvents = async (socket: WebSocket) => {
-      await this._pushEvents(socket, Subjects.VisibilityChange);
-    };
+    super();
   }
+
   private static _instance: VisibilityChangeEvents;
   static instance() {
     if (!this._instance) this._instance = new VisibilityChangeEvents();
     return this._instance;
   }
-
-  private _pushEvents: (socket: WebSocket, subject: Subjects) => Promise<void>;
-  pushEvents: (socket: WebSocket) => Promise<void>;
-  addEvent: (event: VisibilityChangeEvent["record"]) => void;
 }
 
 VisibilityChangeEvents.instance();

@@ -4,7 +4,7 @@ import { CustomEvent } from "../events/types/custom";
 
 const createEventBuffers = <EventType extends CustomEvent>(): [
   (record: EventType["record"]) => void,
-  (socket: WebSocket, subject: Subjects) => Promise<void>
+  (socket: WebSocket, subject: EventType["subject"]) => Promise<void>
 ] => {
   let q1: EventType["record"] = [];
   let q2: EventType["record"] = [];
@@ -14,7 +14,10 @@ const createEventBuffers = <EventType extends CustomEvent>(): [
     q1.push(record);
   };
 
-  const sendEvents = async (socket: WebSocket, subject: Subjects) => {
+  const sendEvents = async (
+    socket: WebSocket,
+    subject: EventType["subject"]
+  ) => {
     if (socket && socket.readyState && q1.length > 0) {
       [q1, q2] = [q2, q1];
       await socket.send(JSON.stringify({ subject, data: { records: q2 } }));
