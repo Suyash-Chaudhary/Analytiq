@@ -1,5 +1,11 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
 import RedisPubSubPublisher from "./redis-pub-sub-publisher";
+import {
+  CustomEventSchema,
+  Subjects,
+  VisitorConnectionEventPayloadSchema,
+} from "@analytiq/shared";
+import { WebsocketManager } from "./state/websocket-manager";
 
 const server = new WebSocketServer({ noServer: true });
 
@@ -7,9 +13,27 @@ server.on("connection", (socket, req) => {
   console.log("Server connection established");
 
   socket.on("message", (data, isBinary) => {
-    const payload = JSON.parse(data.toString());
+    const cevResult = CustomEventSchema.safeParse(JSON.parse(data.toString()));
+    if (!cevResult.success) throw new Error("Invalid message format");
 
-    RedisPubSubPublisher.publish(payload.subject, data.toString());
+    if (cevResult.data.subject === Subjects.VisitorConnection) {
+      const vcevResult = VisitorConnectionEventPayloadSchema.safeParse(
+        cevResult.data
+      );
+      if (!vcevResult.success)
+        throw new Error("Invalid visitor connection message format");
+
+      WebsocketManager.add(socket, {
+        domain: vcevResult.data.data.domain,
+        subdomain: vcevResult.data.data.subdomain,
+        ip: vcevResult.data.data.ip,
+        id: vcevResult.data.data.id,
+        timeStamp: vcevResult.data.data.timeStamp,
+      });
+    }
+
+    const payload = cevResult.data;
+    RedisPubSubPublisher.publish(payload.subject, payload.toString());
   });
 
   socket.on("error", (err) => {
