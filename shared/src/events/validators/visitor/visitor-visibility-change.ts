@@ -1,6 +1,6 @@
-import { Subjects } from "../subjects";
+import { Subjects } from "../../subjects";
 import { z } from "zod";
-import { Visibility } from "../visibility";
+import { Visibility } from "../../visibility";
 
 const VisitorVisibilityChangeEventPayloadSchema = z.object({
   subject: z.literal(Subjects.VisitorVisibilityChange),

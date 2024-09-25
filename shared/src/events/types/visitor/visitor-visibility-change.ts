@@ -1,5 +1,5 @@
-import { Subjects } from "../subjects";
-import { Visibility } from "../visibility";
+import { Subjects } from "../../subjects";
+import { Visibility } from "../../visibility";
 
 interface VisitorVisibilityChangeEventRecord {
   domain: string;

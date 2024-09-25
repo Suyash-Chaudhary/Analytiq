@@ -1,6 +1,6 @@
 import app from "./app";
 import wss from "./wss";
-import RedisClient from "./redis-client";
+import { RedisClient } from "@analytiq/shared";
 import RedisPubSubPublisher from "./redis-pub-sub-publisher";
 
 const startUp = async () => {

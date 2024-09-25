@@ -8,6 +8,7 @@ server.on("connection", (socket, req) => {
 
   socket.on("message", (data, isBinary) => {
     const payload = JSON.parse(data.toString());
+
     RedisPubSubPublisher.publish(payload.subject, data.toString());
   });
 

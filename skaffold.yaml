@@ -15,8 +15,16 @@ build:
         manual:
           - dest: .
             src: src/**/*.ts
-    - image: visitorwss-service
-      context: visitorwss
+    - image: visitor-wss-service
+      context: visitor-wss
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: src/**/*.ts
+    - image: dashboard-wss-service
+      context: dashboard-wss
       docker:
         dockerfile: Dockerfile
       sync:

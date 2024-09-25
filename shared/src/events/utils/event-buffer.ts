@@ -1,4 +1,4 @@
-import { CustomEvent } from "../custom-event";
+import { CustomEvent } from "../types/custom-event";
 
 abstract class EventBuffer<EventType extends CustomEvent> {
   abstract MAX_BUFFER_SIZE: number;

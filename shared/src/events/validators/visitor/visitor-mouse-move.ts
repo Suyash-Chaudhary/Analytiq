@@ -1,8 +1,8 @@
-import { Subjects } from "../subjects";
+import { Subjects } from "../../subjects";
 import { z } from "zod";
 
-const VisitorResizeEventPayloadSchema = z.object({
-  subject: z.literal(Subjects.VisitorResize),
+const VisitorMouseMoveEventPayloadSchema = z.object({
+  subject: z.literal(Subjects.VisitorMouseMove),
   data: z.object({
     records: z.array(
       z.object({
@@ -10,12 +10,12 @@ const VisitorResizeEventPayloadSchema = z.object({
         subdomain: z.string(),
         id: z.string().uuid(),
         ip: z.string().ip(),
-        width: z.number(),
-        height: z.number(),
+        x: z.number(),
+        y: z.number(),
         timeStamp: z.number(),
       })
     ),
   }),
 });
 
-export { VisitorResizeEventPayloadSchema };
+export { VisitorMouseMoveEventPayloadSchema };

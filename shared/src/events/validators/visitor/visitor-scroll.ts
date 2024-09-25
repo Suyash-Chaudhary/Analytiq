@@ -1,8 +1,8 @@
-import { Subjects } from "../subjects";
+import { Subjects } from "../../subjects";
 import { z } from "zod";
 
-const VisitorMouseMoveEventPayloadSchema = z.object({
-  subject: z.literal(Subjects.VisitorMouseMove),
+const VisitorScrollEventPayloadSchema = z.object({
+  subject: z.literal(Subjects.VisitorScroll),
   data: z.object({
     records: z.array(
       z.object({
@@ -18,4 +18,4 @@ const VisitorMouseMoveEventPayloadSchema = z.object({
   }),
 });
 
-export { VisitorMouseMoveEventPayloadSchema };
+export { VisitorScrollEventPayloadSchema };

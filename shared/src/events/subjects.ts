@@ -1,4 +1,8 @@
 export enum Subjects {
+  DomainVisitCompleted = "domain-visit-completed",
+  DomainVisitCreated = "domain-visit-created",
+  DomainVisitUpdated = "domain-visit-updated",
+  VisitorDisconnection = "visitor-disconnection",
   VisitorMouseClick = "visitor-mouseclick",
   VisitorMouseMove = "visitor-mousemove",
   VisitorNavigation = "visitor-navigation",

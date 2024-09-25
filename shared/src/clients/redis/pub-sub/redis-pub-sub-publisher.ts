@@ -1,5 +1,5 @@
 import { RedisClientType } from "redis";
-import { CustomEvent } from "../../../events/custom-event";
+import { CustomEvent } from "../../../events/types/custom-event";
 
 export abstract class RedisPSPublisher<EventType extends CustomEvent> {
   abstract get subject(): EventType["subject"];

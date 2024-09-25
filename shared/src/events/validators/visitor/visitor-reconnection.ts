@@ -1,8 +1,8 @@
-import { Subjects } from "../subjects";
+import { Subjects } from "../../subjects";
 import { z } from "zod";
 
-const VisitorConnectionEventPayloadSchema = z.object({
-  subject: z.literal(Subjects.VisitorConnection),
+const VisitorReconnectionEventPayloadSchema = z.object({
+  subject: z.literal(Subjects.VisitorReconnection),
   data: z.object({
     domain: z.string(),
     subdomain: z.string(),
@@ -14,4 +14,4 @@ const VisitorConnectionEventPayloadSchema = z.object({
   }),
 });
 
-export { VisitorConnectionEventPayloadSchema };
+export { VisitorReconnectionEventPayloadSchema };
