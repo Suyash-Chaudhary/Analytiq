@@ -18,7 +18,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@analytiq/shared": "^0.1.3",
+    "@analytiq/shared": "^0.1.7",
     "short-uuid": "^5.2.0"
   }
 }

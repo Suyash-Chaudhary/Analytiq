@@ -26,6 +26,7 @@ export class SubscriptionManager {
   }
 
   // Instance implementation
+  // { domain: DomainEventSubsriber }
   private _subscriptions: Map<string, DomainEventSubscriber>;
 
   private async _verifySubscription(domain: string) {

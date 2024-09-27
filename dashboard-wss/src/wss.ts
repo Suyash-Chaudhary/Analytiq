@@ -7,7 +7,7 @@ const server = new WebSocketServer({ noServer: true });
 server.on("connection", (socket, req) => {
   console.log("Server connection established");
 
-  socket.on("message", (data, isBinary) => {
+  socket.on("message", (data) => {
     const json = JSON.parse(data.toString());
     const result = DashboardEventSchema.safeParse(json);
     if (!result.data)
