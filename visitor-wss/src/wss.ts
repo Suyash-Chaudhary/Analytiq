@@ -1,11 +1,12 @@
 import { WebSocketServer, WebSocket } from "ws";
-import RedisPubSubPublisher from "./redis-pub-sub-publisher";
 import {
-  CustomEventSchema,
+  RedisClient,
   Subjects,
   VisitorConnectionEventPayloadSchema,
+  VisitorEventSchema,
 } from "@analytiq/shared";
 import { WebsocketManager } from "./state/websocket-manager";
+import { VisitorEventPublisher } from "./events/publishers/visitor";
 
 const server = new WebSocketServer({ noServer: true });
 
@@ -13,7 +14,7 @@ server.on("connection", (socket, req) => {
   console.log("Server connection established");
 
   socket.on("message", (data, isBinary) => {
-    const cevResult = CustomEventSchema.safeParse(JSON.parse(data.toString()));
+    const cevResult = VisitorEventSchema.safeParse(JSON.parse(data.toString()));
     if (!cevResult.success) throw new Error("Invalid message format");
 
     if (cevResult.data.subject === Subjects.VisitorConnection) {
@@ -33,7 +34,7 @@ server.on("connection", (socket, req) => {
     }
 
     const payload = cevResult.data;
-    RedisPubSubPublisher.publish(payload.subject, payload.toString());
+    VisitorEventPublisher.instance().publish(RedisClient.client(), payload);
   });
 
   socket.on("error", (err) => {
@@ -43,6 +44,14 @@ server.on("connection", (socket, req) => {
 
   socket.on("close", (code, reason) => {
     console.log("Socket connection closed");
+
+    // Filter for actualy termination.
+    const data = WebsocketManager.remove(socket);
+    VisitorEventPublisher.instance().publish(RedisClient.client(), {
+      subject: Subjects.VisitorDisconnection,
+      data,
+    });
+
     console.log({ code, reason: reason.toString() });
   });
 

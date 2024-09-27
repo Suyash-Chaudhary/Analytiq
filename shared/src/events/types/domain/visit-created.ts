@@ -1,38 +1,18 @@
 import { Subjects } from "../../subjects";
 import { Visibility } from "../../visibility";
-
-interface ILocation {
-  country: string;
-  region: string;
-  city: string;
-  ll: [number, number];
-  metro: number;
-  zip: number;
-}
-
-interface IVisibility {
-  visibility: Visibility;
-  timeStamp: number;
-}
-
-interface ISession {
-  page: string;
-  query: string;
-  startTime: number;
-  visibility: IVisibility[];
-}
+import { IDomainEventLocation, IDomainEventSession } from "./types";
 
 interface DomainVisitCreatedEventRecord {
-  vid: string;
+  id: string;
   domain: string;
   subdomain: string;
-  ipv4: string;
-  location: ILocation;
+  ip: string;
+  location: IDomainEventLocation;
   startTime: number;
   page: string;
   visibility: Visibility;
   query: string;
-  sessions: ISession[];
+  sessions: IDomainEventSession[];
 }
 
 interface DomainVisitCreatedEventPayload {

@@ -1,13 +1,15 @@
 import {
+  RedisClient,
   RedisPSSubscriber,
   Subjects,
   VisitorVisibilityChangeEvent,
   VisitorVisibilityChangeEventPayloadSchema,
 } from "@analytiq/shared";
-import DomainManager from "../../state/domain-manager";
+import DomainManager, { IVisit } from "../../state/domain-manager";
+import { DomainVisitUpdatedPublisher } from "../publishers/domain/visit-updated";
 
 export class VisitorVisibilityChangeSubscriber extends RedisPSSubscriber<VisitorVisibilityChangeEvent> {
-  readonly subject = Subjects.VisitorVisibilityChange;
+  readonly channel = Subjects.VisitorVisibilityChange;
 
   validator(payload: any): VisitorVisibilityChangeEvent["data"] {
     const result = VisitorVisibilityChangeEventPayloadSchema.safeParse(payload);
@@ -19,7 +21,10 @@ export class VisitorVisibilityChangeSubscriber extends RedisPSSubscriber<Visitor
   }
 
   async handler(payload: VisitorVisibilityChangeEvent["data"]) {
-    let visit;
+    if (payload.data.records.length === 0) return;
+
+    let visit: IVisit;
+
     payload.data.records.forEach((record) => {
       visit = DomainManager.updateVisibility(
         record.domain,
@@ -29,7 +34,13 @@ export class VisitorVisibilityChangeSubscriber extends RedisPSSubscriber<Visitor
         record.visibility
       );
     });
-    console.log({ visit });
+
+    await DomainVisitUpdatedPublisher.instance().publish(RedisClient.client(), {
+      subject: Subjects.DomainVisitUpdated,
+      data: visit!,
+    });
+
+    console.log({ visit: visit! });
   }
 
   // Singleton class

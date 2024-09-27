@@ -1,13 +1,15 @@
 import {
+  RedisClient,
   RedisPSSubscriber,
   Subjects,
   VisitorReconnectionEvent,
   VisitorReconnectionEventPayloadSchema,
 } from "@analytiq/shared";
 import DomainManager from "../../state/domain-manager";
+import { DomainVisitUpdatedPublisher } from "../publishers/domain/visit-updated";
 
 export class VisitorReconnectionSubscriber extends RedisPSSubscriber<VisitorReconnectionEvent> {
-  readonly subject = Subjects.VisitorReconnection;
+  readonly channel = Subjects.VisitorReconnection;
 
   validator(payload: any): VisitorReconnectionEvent["data"] {
     const result = VisitorReconnectionEventPayloadSchema.safeParse(payload);
@@ -26,6 +28,12 @@ export class VisitorReconnectionSubscriber extends RedisPSSubscriber<VisitorReco
       payload.data.timeStamp,
       payload.data.page
     );
+
+    await DomainVisitUpdatedPublisher.instance().publish(RedisClient.client(), {
+      subject: Subjects.DomainVisitUpdated,
+      data: visit,
+    });
+
     console.log({ visit });
   }
 

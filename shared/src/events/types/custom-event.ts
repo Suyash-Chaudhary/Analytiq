@@ -1,5 +1,7 @@
+import { Subjects } from "../subjects";
+
 export interface CustomEvent {
-  subject: string;
+  subject: Subjects;
   data: any;
   record: any;
 }

@@ -12,16 +12,14 @@ const DomainVisitUpdatedEventPayloadSchema = z.object({
     startTime: z.number(),
     visibility: z.nativeEnum(Visibility),
     query: z.string(),
-    location: z.array(
-      z.object({
-        country: z.string(),
-        region: z.string(),
-        city: z.string(),
-        ll: z.tuple([z.number(), z.number()]),
-        metro: z.number(),
-        zip: z.number(),
-      })
-    ),
+    location: z.object({
+      country: z.string(),
+      region: z.string(),
+      city: z.string(),
+      ll: z.tuple([z.number(), z.number()]),
+      metro: z.number(),
+      zip: z.number(),
+    }),
     page: z.string(),
     sessions: z.array(
       z.object({

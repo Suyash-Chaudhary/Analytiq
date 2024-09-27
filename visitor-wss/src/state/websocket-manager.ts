@@ -15,13 +15,6 @@ export class WebsocketManager {
   static initialize() {
     if (!this._instance) this._instance = new WebsocketManager();
   }
-  static get instance() {
-    if (!this.instance)
-      throw new Error(
-        "WebsocketManager must be initalized before accessing instance"
-      );
-    return this._instance;
-  }
 
   static add(
     socket: WebSocket,

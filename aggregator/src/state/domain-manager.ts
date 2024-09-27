@@ -23,11 +23,11 @@ export interface ISession {
 }
 
 export interface IVisit {
-  vid: string;
+  id: string;
   domain: string;
   subdomain: string;
-  ipv4: string;
-  location?: ILocation;
+  ip: string;
+  location: ILocation;
   startTime: number;
   page: string;
   visibility: Visibility;
@@ -121,7 +121,6 @@ class DomainManager {
       visibility
     );
   }
-
   // End of Singleton Class methods
 
   // Instance implementation
@@ -140,14 +139,22 @@ class DomainManager {
       this._domains[domain][subdomain] = {};
 
     const visit: IVisit = {
-      vid: vid,
+      id: vid,
       domain: domain,
       subdomain: subdomain,
-      ipv4: ip,
+      ip: ip,
       startTime: timeStamp,
       page: page,
       visibility: Visibility.Visible,
       query: "",
+      location: {
+        country: "",
+        region: "",
+        city: "",
+        ll: [11, 11],
+        metro: 0,
+        zip: 0,
+      },
       sessions: [
         {
           page: page,
@@ -163,7 +170,7 @@ class DomainManager {
       ],
     };
 
-    this._domains[domain][subdomain][visit.vid] = visit;
+    this._domains[domain][subdomain][visit.id] = visit;
     return visit;
   }
 

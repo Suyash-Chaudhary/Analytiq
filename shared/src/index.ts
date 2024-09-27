@@ -22,6 +22,7 @@ export * from "./events/validators/visitor/visitor-connection";
 export * from "./events/validators/visitor/visitor-mouse-move";
 export * from "./events/validators/visitor/visitor-navigation";
 export * from "./events/validators/visitor/visitor-reconnection";
+export * from "./events/validators/visitor/visitor-disconnection";
 export * from "./events/validators/visitor/visitor-resize";
 export * from "./events/validators/visitor/visitor-scroll";
 export * from "./events/validators/visitor/visitor-visibility-change";
