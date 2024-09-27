@@ -11,4 +11,6 @@ export enum Subjects {
   VisitorVisibilityChange = "visitor-visibilitychange",
   VisitorConnection = "visitor-connection",
   VisitorReconnection = "visitor-reconnection",
+  DashboardSubscribe = "dashboard-subscribe",
+  DashboardUnsubscribe = "dashboard-unsubscribe",
 }

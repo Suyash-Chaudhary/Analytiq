@@ -41,17 +41,20 @@ export class WebsocketManager {
   private _domains: Map<String, Set<WebSocket>>;
 
   private async _resgisterSocketToDomain(socket: WebSocket, domain: string) {
-    if (!this._domains.has(domain)) {
+    let sockets = this._domains.get(domain);
+    if (!sockets) {
       await SubscriptionManager.verifySubscription(domain);
-      this._domains.set(domain, new Set());
+      sockets = new Set();
+      this._domains.set(domain, sockets);
     }
-    this._domains.get(domain)!.add(socket);
+    sockets.add(socket);
   }
 
   private async _unregisterSocketFromDomain(socket: WebSocket, domain: string) {
-    if (!this._domains.has(domain)) return;
-    this._domains.get(domain)!.delete(socket);
-    if (this._domains.get(domain)!.size === 0)
+    const sockets = this._domains.get(domain);
+    if (!sockets) return;
+    sockets.delete(socket);
+    if (sockets.size === 0)
       await SubscriptionManager.removeSubscription(domain);
   }
 
@@ -59,9 +62,11 @@ export class WebsocketManager {
     payload: DomainEvent["data"],
     domain: string
   ) {
-    if (!this._domains.has(domain)) return;
-    this._domains.get(domain)!.forEach((socket) => {
-      socket.send(JSON.stringify(payload));
+    const sockets = this._domains.get(domain);
+    if (!sockets) return;
+    sockets.forEach((socket) => {
+      if (socket.CLOSED || socket.CLOSING) sockets.delete(socket);
+      else socket.send(JSON.stringify(payload));
     });
   }
 }

@@ -13,9 +13,12 @@ export * from "./events/types/visitor/visitor-visibility-change";
 export * from "./events/types/domain/visit-completed";
 export * from "./events/types/domain/visit-updated";
 export * from "./events/types/domain/visit-created";
+export * from "./events/types/dashboard/dashboard-subscribe";
+export * from "./events/types/dashboard/dashboard-unsubscribe";
 export * from "./events/types/domain-event";
 export * from "./events/types/visitor-event";
 export * from "./events/types/custom-event";
+export * from "./events/types/dashboard-event";
 
 export * from "./events/validators/visitor/visitor-click";
 export * from "./events/validators/visitor/visitor-connection";
@@ -32,6 +35,7 @@ export * from "./events/validators/domain/visit-created";
 export * from "./events/validators/domain-event";
 export * from "./events/validators/visitor-event";
 export * from "./events/validators/custom-event";
+export * from "./events/validators/dashboard-event";
 
 export * from "./events/utils/event-buffer";
 
