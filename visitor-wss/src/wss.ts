@@ -1,10 +1,5 @@
 import { WebSocketServer, WebSocket } from "ws";
-import {
-  RedisClient,
-  Subjects,
-  VisitorConnectionEventPayloadSchema,
-  VisitorEventSchema,
-} from "@analytiq/shared";
+import { RedisClient, Subjects, VisitorEventSchema } from "@analytiq/shared";
 import { WebsocketManager } from "./state/websocket-manager";
 import { VisitorEventPublisher } from "./events/publishers/visitor";
 
@@ -41,11 +36,14 @@ server.on("connection", (socket, req) => {
     console.log("Socket connection closed");
     const data = WebsocketManager.remove(socket);
 
-    // Filter for actualy termination.
-    // VisitorEventPublisher.instance().publish(RedisClient.publisher(), {
-    //   subject: Subjects.VisitorDisconnection,
-    //   data,
-    // });
+    // Filter for actual termination.
+    // Going away.
+    if (code === 1001)
+      VisitorEventPublisher.instance().publish(RedisClient.publisher(), {
+        subject: Subjects.VisitorDisconnection,
+        data,
+      });
+    // Network Failure
 
     console.log({ code, reason: reason.toString() });
   });
