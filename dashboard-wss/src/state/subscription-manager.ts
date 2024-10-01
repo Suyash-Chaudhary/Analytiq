@@ -3,7 +3,9 @@ import { DomainEventSubscriber } from "../events/subscribers/domain";
 
 export class SubscriptionManager {
   // Singleton implementation
-  private constructor() {}
+  private constructor() {
+    this._subscriptions = new Map();
+  }
   private static _instance: SubscriptionManager | null = null;
   static initialize() {
     if (!this._instance) this._instance = new SubscriptionManager();
@@ -32,13 +34,15 @@ export class SubscriptionManager {
   private async _verifySubscription(domain: string) {
     if (!this._subscriptions.has(domain)) {
       const subcription = new DomainEventSubscriber(domain);
-      await subcription.subscribe(RedisClient.client());
+      await subcription.subscribe(RedisClient.subscriber());
       this._subscriptions.set(domain, subcription);
     }
   }
 
   private async _removeSubscription(domain: string) {
-    await this._subscriptions.get(domain)?.unsubscribe(RedisClient.client());
+    await this._subscriptions
+      .get(domain)
+      ?.unsubscribe(RedisClient.subscriber());
     this._subscriptions.delete(domain);
   }
 }

@@ -6,11 +6,14 @@ import {
 import { WebsocketManager } from "../../state/websocket-manager";
 
 export class DomainEventSubscriber extends RedisPSSubscriber<DomainEvent> {
-  channel: string;
+  domain: string;
+  get channel(): string {
+    return `domain:${this.domain}`;
+  }
 
-  constructor(channel: string) {
+  constructor(domain: string) {
     super();
-    this.channel = channel;
+    this.domain = domain;
   }
 
   validator(payload: any): DomainEvent["data"] {
@@ -20,6 +23,7 @@ export class DomainEventSubscriber extends RedisPSSubscriber<DomainEvent> {
   }
 
   async handler(payload: DomainEvent["data"]) {
+    console.log({ payload });
     WebsocketManager.forwardDomainEventToSockets(payload, payload.data.domain);
   }
 }

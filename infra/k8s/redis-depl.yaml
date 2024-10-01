@@ -1,29 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dashboard-pub-pub-depl
+  name: redis-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dashboard-pub-sub
+      app: redis
   template:
-    matadata:
-      app: dashboard-pub-sub
+    metadata:
+      labels:
+        app: redis
     spec:
       containers:
         - image: redis
-          name: dashboard-pub-sub-service
+          name: redis-service
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: dashboard-pub-sub-cluster-ip-srv
+  name: redis-cluster-ip-srv
 spec:
   selector:
-    app: dashboard-pub-sub
+    app: redis
   ports:
-    - name: dashboard-pub-sub-service
+    - name: redis-service
       protocol: TCP
       port: 6379
       targetPort: 6379

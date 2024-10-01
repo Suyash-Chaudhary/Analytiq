@@ -2,7 +2,7 @@ import express from "express";
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/api/v1/dashboard-wss", (req, res) => {
   res.send({
     success: true,
   });

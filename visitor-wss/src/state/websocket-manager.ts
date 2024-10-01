@@ -26,10 +26,18 @@ export class WebsocketManager {
       timeStamp: number;
     }
   ) {
+    if (!this._instance)
+      throw new Error(
+        "WebsocketManager must be initialized before calling add()"
+      );
     return this._instance._add(socket, data);
   }
 
   static remove(socket: WebSocket) {
+    if (!this._instance)
+      throw new Error(
+        "WebsocketManager must be initialized before calling remove()"
+      );
     return this._instance._remove(socket);
   }
 

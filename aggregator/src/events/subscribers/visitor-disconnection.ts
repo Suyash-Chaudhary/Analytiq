@@ -26,7 +26,7 @@ export class VisitorDisconnectionSubscriber extends RedisPSSubscriber<VisitorDis
     );
 
     await DomainVisitCompletedPublisher.instance().publish(
-      RedisClient.client(),
+      RedisClient.publisher(),
       {
         subject: Subjects.DomainVisitCompleted,
         data: {

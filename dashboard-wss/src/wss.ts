@@ -7,7 +7,7 @@ const server = new WebSocketServer({ noServer: true });
 server.on("connection", (socket, req) => {
   console.log("Server connection established");
 
-  socket.on("message", (data) => {
+  socket.on("message", async (data) => {
     const json = JSON.parse(data.toString());
     const result = DashboardEventSchema.safeParse(json);
     if (!result.data)
@@ -15,14 +15,19 @@ server.on("connection", (socket, req) => {
         `Invalid message format for DashboardEvent. Message: ${json}`
       );
 
-    if (result.data.subject === Subjects.DashboardSubscribe)
-      WebsocketManager.resgisterSocketToDomain(socket, result.data.data.domain);
-
-    if (result.data.subject === Subjects.DashboardUnsubscribe)
-      WebsocketManager.unregisterSocketFromDomain(
+    if (result.data.subject === Subjects.DashboardSubscribe) {
+      await WebsocketManager.resgisterSocketToDomain(
         socket,
         result.data.data.domain
       );
+    }
+
+    if (result.data.subject === Subjects.DashboardUnsubscribe) {
+      await WebsocketManager.unregisterSocketFromDomain(
+        socket,
+        result.data.data.domain
+      );
+    }
   });
 
   socket.on("error", (err) => {

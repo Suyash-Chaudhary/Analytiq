@@ -1,3 +1,4 @@
+import { Visibility } from "@analytiq/shared";
 import ClickEvents from "./events/buffers/visitor-click";
 import MouseMoveEvents from "./events/buffers/visitor-mouse-move";
 import NavigationEvents from "./events/buffers/visitor-navigation";
@@ -60,7 +61,10 @@ const registerListeners = () => {
       subdomain: globals.subdomain,
       id: globals.id,
       ip: globals.ip,
-      visibility: document.visibilityState,
+      visibility:
+        document.visibilityState === "hidden"
+          ? Visibility.Hidden
+          : Visibility.Visible,
       timeStamp: event.timeStamp,
     });
   });

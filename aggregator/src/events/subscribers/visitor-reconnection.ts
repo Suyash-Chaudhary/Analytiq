@@ -29,12 +29,14 @@ export class VisitorReconnectionSubscriber extends RedisPSSubscriber<VisitorReco
       payload.data.page
     );
 
-    await DomainVisitUpdatedPublisher.instance().publish(RedisClient.client(), {
-      subject: Subjects.DomainVisitUpdated,
-      data: visit,
-    });
-
-    console.log({ visit });
+    if (visit)
+      await DomainVisitUpdatedPublisher.instance().publish(
+        RedisClient.publisher(),
+        {
+          subject: Subjects.DomainVisitUpdated,
+          data: visit,
+        }
+      );
   }
 
   // Singleton class

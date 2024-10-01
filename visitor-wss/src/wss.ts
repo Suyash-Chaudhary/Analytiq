@@ -34,7 +34,7 @@ server.on("connection", (socket, req) => {
     }
 
     const payload = cevResult.data;
-    VisitorEventPublisher.instance().publish(RedisClient.client(), payload);
+    VisitorEventPublisher.instance().publish(RedisClient.publisher(), payload);
   });
 
   socket.on("error", (err) => {
@@ -46,11 +46,11 @@ server.on("connection", (socket, req) => {
     console.log("Socket connection closed");
 
     // Filter for actualy termination.
-    const data = WebsocketManager.remove(socket);
-    VisitorEventPublisher.instance().publish(RedisClient.client(), {
-      subject: Subjects.VisitorDisconnection,
-      data,
-    });
+    // const data = WebsocketManager.remove(socket);
+    // VisitorEventPublisher.instance().publish(RedisClient.publisher(), {
+    //   subject: Subjects.VisitorDisconnection,
+    //   data,
+    // });
 
     console.log({ code, reason: reason.toString() });
   });

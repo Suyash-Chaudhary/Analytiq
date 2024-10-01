@@ -30,12 +30,13 @@ export class VisitorConnectionSubscriber extends RedisPSSubscriber<VisitorConnec
       payload.data.page
     );
 
-    await DomainVisitCreatedPublisher.instance().publish(RedisClient.client(), {
-      subject: Subjects.DomainVisitCreated,
-      data: visit,
-    });
-
-    console.log({ visit });
+    await DomainVisitCreatedPublisher.instance().publish(
+      RedisClient.publisher(),
+      {
+        subject: Subjects.DomainVisitCreated,
+        data: visit,
+      }
+    );
   }
 
   // Singleton class

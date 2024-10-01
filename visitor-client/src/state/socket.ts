@@ -99,7 +99,7 @@ class Socket {
       throw new Error("Socket need to be initialized before connect()");
 
     this._instance._socket = new WebSocket(
-      "ws://analytiq.in/api/v1/visitorwss"
+      "ws://analytiq.in/api/v1/visitor-wss"
     );
     this._instance._socket.addEventListener("open", () => this._handleOpen());
     this._instance._socket.addEventListener("close", () => this._handleClose());

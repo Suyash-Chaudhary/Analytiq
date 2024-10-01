@@ -17,10 +17,17 @@ spec:
                 name: aggregator-cluster-ip-srv
                 port:
                   number: 3000
-          - path: /api/v1/visitorwss/?(.*)
+          - path: /api/v1/visitor-wss/?(.*)
             pathType: Prefix
             backend:
               service:
-                name: visitorwss-cluster-ip-srv
+                name: visitor-wss-cluster-ip-srv
+                port:
+                  number: 3000
+          - path: /api/v1/dashboard-wss/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-wss-cluster-ip-srv
                 port:
                   number: 3000

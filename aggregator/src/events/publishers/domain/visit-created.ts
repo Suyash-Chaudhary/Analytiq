@@ -1,12 +1,8 @@
-import {
-  DomainVisitCreatedEvent,
-  RedisPSPublisher,
-  Subjects,
-} from "@analytiq/shared";
+import { DomainVisitCreatedEvent, RedisPSPublisher } from "@analytiq/shared";
 
 export class DomainVisitCreatedPublisher extends RedisPSPublisher<DomainVisitCreatedEvent> {
   channel(payload: DomainVisitCreatedEvent["data"]): string {
-    return payload.data.domain;
+    return `domain:${payload.data.domain}`;
   }
   // Singleton Implementation
   private constructor() {

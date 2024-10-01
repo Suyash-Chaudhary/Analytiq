@@ -2,7 +2,7 @@ import { DomainVisitCompletedEvent, RedisPSPublisher } from "@analytiq/shared";
 
 export class DomainVisitCompletedPublisher extends RedisPSPublisher<DomainVisitCompletedEvent> {
   channel(payload: DomainVisitCompletedEvent["data"]): string {
-    return payload.data.domain;
+    return `domain:${payload.data.domain}`;
   }
 
   // Singleton Implementation

@@ -3,7 +3,6 @@ import app from "./app";
 import wss from "./wss";
 import { SubscriptionManager } from "./state/subscription-manager";
 import { WebsocketManager } from "./state/websocket-manager";
-import { DomainEventSubscriber } from "./events/subscribers/domain";
 
 const startup = async () => {
   RedisClient.initialize(process.env.REDIS_URL);

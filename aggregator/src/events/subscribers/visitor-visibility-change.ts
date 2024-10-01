@@ -23,7 +23,7 @@ export class VisitorVisibilityChangeSubscriber extends RedisPSSubscriber<Visitor
   async handler(payload: VisitorVisibilityChangeEvent["data"]) {
     if (payload.data.records.length === 0) return;
 
-    let visit: IVisit;
+    let visit: IVisit | undefined;
 
     payload.data.records.forEach((record) => {
       visit = DomainManager.updateVisibility(
@@ -35,12 +35,14 @@ export class VisitorVisibilityChangeSubscriber extends RedisPSSubscriber<Visitor
       );
     });
 
-    await DomainVisitUpdatedPublisher.instance().publish(RedisClient.client(), {
-      subject: Subjects.DomainVisitUpdated,
-      data: visit!,
-    });
-
-    console.log({ visit: visit! });
+    if (visit)
+      await DomainVisitUpdatedPublisher.instance().publish(
+        RedisClient.publisher(),
+        {
+          subject: Subjects.DomainVisitUpdated,
+          data: visit!,
+        }
+      );
   }
 
   // Singleton class

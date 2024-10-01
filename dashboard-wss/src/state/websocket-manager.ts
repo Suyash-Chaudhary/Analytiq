@@ -4,7 +4,9 @@ import { SubscriptionManager } from "./subscription-manager";
 
 export class WebsocketManager {
   // Singleton implementation
-  private constructor() {}
+  private constructor() {
+    this._domains = new Map();
+  }
   private static _instance: WebsocketManager | null = null;
   static initialize() {
     if (!this._instance) this._instance = new WebsocketManager();
@@ -65,8 +67,7 @@ export class WebsocketManager {
     const sockets = this._domains.get(domain);
     if (!sockets) return;
     sockets.forEach((socket) => {
-      if (socket.CLOSED || socket.CLOSING) sockets.delete(socket);
-      else socket.send(JSON.stringify(payload));
+      socket.send(JSON.stringify(payload));
     });
   }
 }

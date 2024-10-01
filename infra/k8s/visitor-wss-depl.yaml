@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aggregator-depl
+  name: visitor-wss-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: aggregator
+      app: visitor-wss
   template:
     metadata:
       labels:
-        app: aggregator
+        app: visitor-wss
     spec:
       containers:
-        - image: aggregator-service
-          name: aggregator-service
+        - image: visitor-wss-service
+          name: visitor-wss-service
           imagePullPolicy: Never
           env:
             - name: REDIS_URL
@@ -23,12 +23,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: aggregator-cluster-ip-srv
+  name: visitor-wss-cluster-ip-srv
 spec:
   selector:
-    app: aggregator
+    app: visitor-wss
   ports:
-    - name: aggregator-service
+    - name: visitor-wss-service
       protocol: TCP
       port: 3000
       targetPort: 3000

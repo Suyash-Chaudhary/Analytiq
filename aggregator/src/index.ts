@@ -10,11 +10,13 @@ const startUp = async () => {
   RedisClient.initialize(process.env.REDIS_URL);
   await RedisClient.connect();
 
-  VisitorConnectionSubscriber.instance().subscribe(RedisClient.client());
-  VisitorReconnectionSubscriber.instance().subscribe(RedisClient.client());
-  VisitorNavigationSubscriber.instance().subscribe(RedisClient.client());
-  VisitorVisibilityChangeSubscriber.instance().subscribe(RedisClient.client());
-  VisitorDisconnectionSubscriber.instance().subscribe(RedisClient.client());
+  VisitorConnectionSubscriber.instance().subscribe(RedisClient.subscriber());
+  VisitorReconnectionSubscriber.instance().subscribe(RedisClient.subscriber());
+  VisitorNavigationSubscriber.instance().subscribe(RedisClient.subscriber());
+  VisitorVisibilityChangeSubscriber.instance().subscribe(
+    RedisClient.subscriber()
+  );
+  VisitorDisconnectionSubscriber.instance().subscribe(RedisClient.subscriber());
 
   app.listen(3000, () => {
     console.log("Listening on port 3000");

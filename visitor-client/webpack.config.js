@@ -19,4 +19,7 @@ module.exports = {
     filename: "analytiq-client.bundle.js",
     path: path.resolve(__dirname, "dist"),
   },
+  externals: {
+    redis: "undefined", // Exclude redis from the bundle
+  },
 };
