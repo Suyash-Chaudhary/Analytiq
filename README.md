@@ -2,12 +2,12 @@
 
 ## TODO
 
-- [*] Implement DomainManagement on Aggregator
-- [*] Stream domain level aggregation thorugh Redis
-- [*] Add clientwss service
-- [*] Subscribe clientwss to the right streams
-- [*] Forward events on the respective sockets
-- [*] Extract Events, Publishers & Subscribers in a shared module
+- [x] Implement DomainManagement on Aggregator
+- [x] Stream domain level aggregation thorugh Redis
+- [x] Add clientwss service
+- [x] Subscribe clientwss to the right streams
+- [x] Forward events on the respective sockets
+- [x] Extract Events, Publishers & Subscribers in a shared module
 - [] Handle socket disconnection edge cases
   - [] Network Failures
   - [] Crashes
