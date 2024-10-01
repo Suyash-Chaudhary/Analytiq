@@ -11,6 +11,7 @@ const VisitorReconnectionEventPayloadSchema = z.object({
     page: z.string(),
     html: z.string(),
     timeStamp: z.number(),
+    startTimeStamp: z.number(),
   }),
 });
 

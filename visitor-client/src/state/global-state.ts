@@ -7,6 +7,7 @@ class GlobalState {
   // Single instance
   private static _instance: GlobalState | null = null;
   private constructor(id: string, ip: string) {
+    this.startTimestamp = new Date().getUTCMilliseconds();
     this.id = id;
     this.ip = ip;
     this.browser = detectBrowser();
@@ -30,6 +31,7 @@ class GlobalState {
     return this._instance;
   }
 
+  startTimestamp: number;
   browser: string;
   domain: string;
   subdomain: string;

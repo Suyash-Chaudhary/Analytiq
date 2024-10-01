@@ -24,6 +24,7 @@ export class WebsocketManager {
       ip: string;
       id: string;
       timeStamp: number;
+      startTimeStamp: number;
     }
   ) {
     if (!this._instance)
@@ -55,6 +56,7 @@ export class WebsocketManager {
       ip: string;
       id: string;
       timeStamp: number;
+      startTimeStamp: number;
     }
   ) {
     this._map.set(socket, {
@@ -63,7 +65,7 @@ export class WebsocketManager {
       ip: data.ip,
       id: data.id,
       timeStamp: data.timeStamp,
-      start: Date.now(),
+      start: data.startTimeStamp,
     });
   }
 
@@ -76,7 +78,7 @@ export class WebsocketManager {
       ip: data.ip,
       domain: data.domain,
       subdomain: data.subdomain,
-      timeStamp: data.timeStamp + Date.now() - data.start,
+      timeStamp: Date.now() - data.start,
     };
   }
 }

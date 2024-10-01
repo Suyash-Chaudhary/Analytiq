@@ -14,26 +14,21 @@ server.on("connection", (socket, req) => {
   console.log("Server connection established");
 
   socket.on("message", (data, isBinary) => {
-    const cevResult = VisitorEventSchema.safeParse(JSON.parse(data.toString()));
-    if (!cevResult.success) throw new Error("Invalid message format");
+    const vevResult = VisitorEventSchema.safeParse(JSON.parse(data.toString()));
+    if (!vevResult.success) throw new Error("Invalid message format");
 
-    if (cevResult.data.subject === Subjects.VisitorConnection) {
-      const vcevResult = VisitorConnectionEventPayloadSchema.safeParse(
-        cevResult.data
-      );
-      if (!vcevResult.success)
-        throw new Error("Invalid visitor connection message format");
-
+    if (vevResult.data.subject === Subjects.VisitorConnection) {
       WebsocketManager.add(socket, {
-        domain: vcevResult.data.data.domain,
-        subdomain: vcevResult.data.data.subdomain,
-        ip: vcevResult.data.data.ip,
-        id: vcevResult.data.data.id,
-        timeStamp: vcevResult.data.data.timeStamp,
+        domain: vevResult.data.data.domain,
+        subdomain: vevResult.data.data.subdomain,
+        ip: vevResult.data.data.ip,
+        id: vevResult.data.data.id,
+        timeStamp: vevResult.data.data.timeStamp,
+        startTimeStamp: vevResult.data.data.startTimeStamp,
       });
     }
 
-    const payload = cevResult.data;
+    const payload = vevResult.data;
     VisitorEventPublisher.instance().publish(RedisClient.publisher(), payload);
   });
 
@@ -44,9 +39,9 @@ server.on("connection", (socket, req) => {
 
   socket.on("close", (code, reason) => {
     console.log("Socket connection closed");
+    const data = WebsocketManager.remove(socket);
 
     // Filter for actualy termination.
-    // const data = WebsocketManager.remove(socket);
     // VisitorEventPublisher.instance().publish(RedisClient.publisher(), {
     //   subject: Subjects.VisitorDisconnection,
     //   data,

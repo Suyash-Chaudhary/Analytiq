@@ -7,6 +7,7 @@ interface VisitorReconnectionEventRecord {
   domain: string;
   subdomain: string;
   page: string;
+  startTimeStamp: number;
   timeStamp: number;
 }
 
